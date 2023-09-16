@@ -7,6 +7,7 @@
 #include "Entity.hpp"
 #include "FrameRateController.hpp"
 #include "InputManager.hpp"
+#include "ResourceManager.hpp"
 
 void initPackages();
 
@@ -14,9 +15,13 @@ int main() {
 
     initPackages();
 
+    //Initialise required classes
     RenderWindow window("game v1.0", 1280, 720);
+    ResourceManager srcManager(window);
+    FrameRateController rateController(window.getRefreshRate());
+    InputManager inputManager;
 
-    SDL_Texture* grassTexture = window.loadTexture("../res/gfx/ground_grass.png");
+    SDL_Texture* grassTexture = srcManager.loadTexture("../res/gfx/ground_grass.png");
 
     //Testing rendering multiple textures
     std::vector<Entity> entities = {Entity(Vector2f(0,100), grassTexture),
@@ -25,9 +30,6 @@ int main() {
                                     Entity(Vector2f(90, 100), grassTexture),
                                     Entity(Vector2f(120, 100), grassTexture)};
 
-    FrameRateController rateController(window.getRefreshRate());
-
-    InputManager inputManager;
 
     bool gameIsRunning{true};
     while (gameIsRunning){
@@ -54,7 +56,7 @@ int main() {
 
 
     //Clearing buffers and exiting program
-    SDL_DestroyTexture(grassTexture);//temporal for the grassTexture
+    srcManager.cleanUp();
     window.cleanUp();
     SDL_Quit();
 

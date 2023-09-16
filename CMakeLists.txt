@@ -22,6 +22,7 @@ set(SOURCE_FILES
         src/Math.cpp
         src/RenderWindow.cpp
         src/InputManager.cpp
+        src/ResourceManager.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
