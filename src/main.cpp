@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "RenderWindow.hpp"
-#include "Entity.hpp"
+#include "Player.hpp"
 #include "FrameRateController.hpp"
 #include "InputManager.hpp"
 #include "ResourceManager.hpp"
@@ -21,14 +21,17 @@ int main() {
     FrameRateController rateController(window.getRefreshRate());
     InputManager inputManager;
 
-    SDL_Texture* grassTexture = srcManager.loadTexture("../res/gfx/ground_grass.png");
+    SDL_Texture* AlienTexture = srcManager.loadTexture("../res/gfx/Alienship.png");
 
     //Testing rendering multiple textures
-    std::vector<Entity> entities = {Entity(Vector2f(0,100), grassTexture),
-                                    Entity(Vector2f(30, 100), grassTexture),
-                                    Entity(Vector2f(60, 100), grassTexture),
-                                    Entity(Vector2f(90, 100), grassTexture),
-                                    Entity(Vector2f(120, 100), grassTexture)};
+    std::vector<Renderable> entities = {Renderable(Vector2f(0,100), AlienTexture),
+                                    Renderable(Vector2f(30, 100), AlienTexture),
+                                    Renderable(Vector2f(60, 100), AlienTexture),
+                                    Renderable(Vector2f(90, 100), AlienTexture),
+                                    Renderable(Vector2f(120, 100), AlienTexture)};
+
+    SDL_Texture* spaceShipTexture = srcManager.loadTexture("../res/gfx/spaceship.png");
+    Player player(Vector2f(100,100), spaceShipTexture);
 
 
     bool gameIsRunning{true};
@@ -40,12 +43,25 @@ int main() {
         if (inputManager.shouldQuit())
             gameIsRunning = false;
 
+        if(inputManager.isKeyPressed(SDLK_LEFT))
+            player.moveLeft();
+
+        if(inputManager.isKeyPressed(SDLK_RIGHT))
+            player.moveRight();
+
+        if(inputManager.isKeyPressed(SDLK_UP))
+            player.moveUp();
+
+        if(inputManager.isKeyPressed(SDLK_DOWN))
+            player.moveDown();
+
 
         //(2) Rendering Graphics
         window.clear();
-        for (Entity& entity : entities){
+        for (Renderable& entity : entities){
             window.render(entity);
         }
+        window.render(player);
         window.display();
 
 

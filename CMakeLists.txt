@@ -17,12 +17,13 @@ endif()
 
 set(SOURCE_FILES
         src/main.cpp
-        src/Entity.cpp
+        src/Player.cpp
         src/FrameRateController.cpp
         src/Math.cpp
         src/RenderWindow.cpp
         src/InputManager.cpp
         src/ResourceManager.cpp
+        src/Renderable.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

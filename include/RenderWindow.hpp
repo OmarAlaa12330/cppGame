@@ -2,13 +2,13 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Entity.hpp"
+#include "Renderable.hpp"
 
 class RenderWindow{
 public:
     RenderWindow(const char* title, int width, int height);
     void clear();
-    void render(Entity& entity);
+    void render(Renderable& entity);
     void display();
     int getRefreshRate();
     void cleanUp();

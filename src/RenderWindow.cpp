@@ -4,7 +4,8 @@
 #include <SDL_image.h>
 #include <iostream>
 
-#include "../include/RenderWindow.hpp"
+#include "RenderWindow.hpp"
+#include "Renderable.hpp"
 
 RenderWindow::RenderWindow(const char *title, int width, int height){
     mWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
@@ -16,17 +17,11 @@ RenderWindow::RenderWindow(const char *title, int width, int height){
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
-
-void RenderWindow::cleanUp() {
-    SDL_DestroyWindow(mWindow);
-    SDL_DestroyRenderer(mRenderer);
-}
-
 void RenderWindow::clear() {
     SDL_RenderClear(mRenderer);
 }
 
-void RenderWindow::render(Entity& entity) {
+void RenderWindow::render(Renderable& entity) {
     SDL_Rect src;
     src.x = entity.getCurrentFrame().x;
     src.y = entity.getCurrentFrame().y;
@@ -56,4 +51,8 @@ int RenderWindow::getRefreshRate() {
     return mode.refresh_rate;
 }
 
+void RenderWindow::cleanUp() {
+    SDL_DestroyWindow(mWindow);
+    SDL_DestroyRenderer(mRenderer);
+}
 
